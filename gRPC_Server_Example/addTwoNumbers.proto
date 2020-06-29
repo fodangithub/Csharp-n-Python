@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option csharp_namespace = "addTwoNumbersService";
+
+package addTwoNumbers;
+
+// The AddTwoNumber service definition.
+// service could be treated as a class that contains only functions in most OOPs
+// 我们看到这里的AddTwoNumberService是以”service”关键字开头，这里可以认为是
+// 众多面向对象编程语言里面的接口类（interface或者protocal）的定义，因为其中的
+// 方法定义都不会有具体的方法实现，方法实现是要在服务器后端代码中实现的
+service AddTwoNumberService {
+  // line starts with 'rpc' keyword would define the actual service that can be called from client
+  // these could be seen as functions without actual implementation (cause the implementation would be in the server side codes, here in our example, Python codes)
+  // defined as interfaces... or protocals...
+  // 这里的由rpc关键字开头的行即是接口类中的方法
+  // 方法名称为AddTwo
+  // 接受一个AddTwoNumberRequest输入类，返回类为AddTwoNumberReply
+  rpc AddTwo (AddTwoNumberRequest) returns (AddTwoNumberReply);   
+}
+
+// 'message' keyword defines class with only properties
+// 由message关键字开头的可以认为是只有属性的类的定义
+// 这里定义的类由上面的接口类使用
+message AddTwoNumberRequest {
+  // the number after the property names is only index, not actual value
+  // so if you would define a string property, or a double property, it would still be like:
+  //		string newString = 1;
+  //		int32 newInt = 2;
+  //		double greatDouble = 3;
+  //		...
+  // 属性名称后面的=号并不是给属性赋值的含义，而是仅仅表示该属性的序号
+  // 序号对于我们来说并不重要，但是对程序解读proto文件来说是至关重要的
+  int32 firstNum = 1;
+  int32 secondNum = 2;
+}
+
+// same here, but we just need one number
+message AddTwoNumberReply {
+  int32 resultVal = 1;
+}
